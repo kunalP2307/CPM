@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "49561406371",
+    "project_id": "cpm-81a97",
+    "storage_bucket": "cpm-81a97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49561406371:android:3b29d2f07bb4bace3ce816",
+        "android_client_info": {
+          "package_name": "com.example.cpm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49561406371-rtusgoe26mrha091cu9qd2jpivbtn95n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANizhoSHpSFtOev6bWh5g9qGchZ1A3cKc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49561406371-rtusgoe26mrha091cu9qd2jpivbtn95n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

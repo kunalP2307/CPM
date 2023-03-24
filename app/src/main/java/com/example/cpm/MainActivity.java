@@ -3,6 +3,7 @@ package com.example.cpm;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -18,17 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
-        firebaseAuth.createUserWithEmailAndPassword("kunalpatil2307@gmail.com", "Acc0unt$")
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(MainActivity.this, "Complete", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 
     }
 }
