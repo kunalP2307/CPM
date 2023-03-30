@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.cpm.R;
+import com.example.cpm.model.Login;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -54,7 +55,14 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isValidCreds();
+                String email = editTextEmail.getText().toString();
+                String password = editTextPassword.getText().toString();
+                String authority = spinnerAuthority.getSelectedItem().toString();
+                if(isValidCreds()){
+                    loginUserWithEmail(
+                        new Login(email, password, authority)
+                    );
+                }
             }
         });
 
@@ -73,6 +81,15 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void loginUserWithEmail(Login login){
+        String email = login.getEmail();
+        String password = login.getPassword();
+        String authority = login.getAuthority();
+
+
+
     }
 
     public boolean isValidCreds(){

@@ -88,6 +88,5 @@ public class ValidateUserCodeActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 }
