@@ -3,6 +3,7 @@ package com.example.cpm;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -74,6 +75,7 @@ public class ValidateUserCodeActivity extends AppCompatActivity {
                                             if(task.isSuccessful()){
                                                 Toast.makeText(ValidateUserCodeActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                                                 progressBar.setVisibility(View.GONE);
+                                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                                             }
                                             else{
                                                 Toast.makeText(ValidateUserCodeActivity.this, "Failed to Register Try Again!", Toast.LENGTH_SHORT).show();

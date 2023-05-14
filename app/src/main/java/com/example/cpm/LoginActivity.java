@@ -1,8 +1,13 @@
 package com.example.cpm;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,9 +16,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cpm.R;
 import com.example.cpm.model.Login;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText editTextEmail, editTextPassword;
     TextView textViewForgotPassword, textViewSignUp;
     Button buttonLogin;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +42,21 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
+        checkIfLoggedIn();
         bindComponents();
         initSpinner();
+    }
+
+    private void checkIfLoggedIn() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            Intent i = new Intent(LoginActivity.this, JnEnggHomeActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+        } else {
+            // User is signed out
+            Log.d(TAG, "onAuthStateChanged:signed_out");
+        }
     }
 
     public void bindComponents() {
@@ -78,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         textViewSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
             }
         });
     }
@@ -88,6 +113,19 @@ public class LoginActivity extends AppCompatActivity {
         String password = login.getPassword();
         String authority = login.getAuthority();
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    startActivity(new Intent(getApplicationContext(), JnEnggHomeActivity.class));
+                }
+                else{
+                    Toast.makeText(LoginActivity.this, "Invalid Credentials Please Try Again.!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
     }

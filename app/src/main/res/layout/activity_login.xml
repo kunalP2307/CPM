@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F9F8F8"
+    android:background="#F9FBE7"
     tools:context=".LoginActivity">
 
     <EditText
@@ -60,8 +60,8 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="146dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="292dp"
         android:text="Select Authority"
         android:textColor="#FFC107"
         app:layout_constraintStart_toStartOf="parent"
