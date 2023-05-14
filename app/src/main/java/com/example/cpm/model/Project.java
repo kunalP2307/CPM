@@ -1,12 +1,15 @@
 package com.example.cpm.model;
 
+import com.example.cpm.utils.ActivityUtils;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Project {
+public class Project implements Serializable {
 
     private String projectName, startDate, expectedEndDate;
     private int  durationInDays ,noActCompletedOnTime, noActCompletedWithDelay, noOfActYetToStart;
-    ArrayList listActivities;
+    ArrayList<ArrayList<Activity>> listActivities;
 
     public Project(){}
 
@@ -19,7 +22,9 @@ public class Project {
         this.noActCompletedWithDelay = noActCompletedWithDelay;
         this.noOfActYetToStart = noOfActYetToStart;
         this.listActivities = listActivities;
+
     }
+
 
     public String getProjectName() {
         return projectName;
@@ -83,6 +88,15 @@ public class Project {
 
     public void setListActivities(ArrayList<ArrayList<Activity>> listActivities) {
         this.listActivities = listActivities;
+    }
+
+    public void setDelay(){
+        for(int i=0; i<listActivities.size(); i++){
+            for(int j=0; j<listActivities.get(i).size(); j++){
+                Activity activity = listActivities.get(i).get(j);
+                listActivities.get(i).get(j).setDelay(ActivityUtils.getDelay(activity));
+            }
+        }
     }
 
     @Override

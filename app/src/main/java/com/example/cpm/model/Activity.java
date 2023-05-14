@@ -1,6 +1,8 @@
 package com.example.cpm.model;
 
-public class Activity {
+import java.io.Serializable;
+
+public class Activity implements Serializable {
 
     private String id, taskName, duration, startDate ,finishDate;
     private int delay;

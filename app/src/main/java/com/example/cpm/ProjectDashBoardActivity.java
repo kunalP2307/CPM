@@ -2,7 +2,10 @@ package com.example.cpm;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +19,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.checkerframework.checker.units.qual.A;
 import org.eazegraph.lib.charts.PieChart;
 
 import java.util.ArrayList;
@@ -24,27 +26,69 @@ import java.util.ArrayList;
 public class ProjectDashBoardActivity extends AppCompatActivity implements SelectListener{
 
     PieChart pieChart;
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
-    Project project;
+
+    RecyclerView recyclerView;
+    private ActivityAdapter activityAdapter;
     private ArrayList<ArrayList<Activity>> subActivities = new ArrayList<ArrayList<Activity>>();
+    private Project project;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_dash_board);
 
-        //storeProject();
-        //getProject();
+        activityAdapter = new ActivityAdapter(this, this);
+        recyclerView = findViewById(R.id.recycler_main_activity);
+        recyclerView.setAdapter(activityAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        getProjectData();
+        initRecyclerView();
+
+    }
+
+    private void getProjectData(){
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            project = (Project) extras.getSerializable("PROJECT_DATA");
+        }
+    }
+
+    private void initRecyclerView(){
+        for(int i=0; i<project.getListActivities().size(); i++){
+            activityAdapter.addActivity(project.getListActivities().get(i).get(0));
+        }
     }
     private void storeProject(){
         ArrayList<ArrayList<Activity>> list = new ArrayList<>();
         list.add(new ArrayList());
+        list.get(0).add(new Activity("1", "General Layout", "15", "07-09-22", "27-09-22"));
+        list.get(0).add(new Activity("1a", "Submission of Layout from Contractor to", "5", "07-09-22", "13-09-22"));
 
-        list.get(0).add(new Activity("id", "task2", "duration", "startDate", "endDate"));
-        Project project = new Project("prName4", "prSt", "prEnd", 10,2,4,5,list);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Project1");
+
+        list.add(new ArrayList());
+        list.get(1).add(new Activity("2", "Alignment Sanction", "5", "07-09-22", "27-09-22"));
+        list.get(1).add(new Activity("2a", "Submission of proposal from Sub division to division", "2", "28-09-22", "29-09-22"));
+
+        list.add(new ArrayList());
+        list.get(2).add(new Activity("3", "Detailed Design", "20", "28-09-22", "04-10-22"));
+        list.get(2).add(new Activity("3a", "Submission of proposal from Sub division to division", "10", "03-10-22", "14-10-22"));
+
+        list.add(new ArrayList());
+        list.get(3).add(new Activity("4", "Control Blasting Proposal", "8", "03-10-22", "28-10-22"));
+        list.get(3).add(new Activity("4a", "Submission of proposal from Sub division to division", "1", "05-10-22", "05-10-22"));
+
+        list.add(new ArrayList());
+        list.get(4).add(new Activity("5", "Estimate", "32", "05-10-22", "14-10-22"));
+        list.get(4).add(new Activity("5a", "Lead Approval", "2", "05-10-22", "06-10-22"));
+
+        list.add(new ArrayList());
+        list.get(5).add(new Activity("6", "Break up Proposal", "6", "18-11-22", "25-11-22"));
+        list.get(5).add(new Activity("6a", "Submission of proposal from Sub division to Division", "1", "18-11-22", "18-11-22"));
+
+
+        Project project = new Project("PDN Design,Estimate,DTP and Tender", "06-09-22", "01-03-23", 127,2,4,5,list);
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("Project1");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -61,7 +105,7 @@ public class ProjectDashBoardActivity extends AppCompatActivity implements Selec
     }
 
     private void getProject(){
-       DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Project1");
+       DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Project1");
        databaseReference.addValueEventListener(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -78,6 +122,10 @@ public class ProjectDashBoardActivity extends AppCompatActivity implements Selec
 
     @Override
     public void onItemClick(View v, int position, Activity activity) {
-        Toast.makeText(this, ""+subActivities.get(position).size(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, ""+position, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), ShowSubActivitiesActivity.class);
+        intent.putExtra("EXTRA_ACTIVITIES", project.getListActivities().get(position));
+        startActivity(intent);
+
     }
 }

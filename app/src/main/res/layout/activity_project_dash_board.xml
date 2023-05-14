@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFDE7"
+    android:id="@+id/layout_dashboard_main"
     tools:context=".ProjectDashBoardActivity">
 
 
@@ -16,7 +19,8 @@
         android:layout_marginEnd="20dp"
         android:text="Delay"
         android:textColor="#3F51B5"
-        android:textSize="18dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view9" />
 
@@ -28,26 +32,27 @@
         android:layout_marginTop="2dp"
         android:text="Task Name"
         android:textColor="#3F51B5"
-        android:textSize="18dp"
-
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/text_view_id_row3"
         app:layout_constraintTop_toBottomOf="@+id/view9" />
 
     <TextView
         android:id="@+id/text_view_id_row3"
-        android:layout_width="36dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="2dp"
         android:gravity="right"
         android:text="ID"
         android:textColor="#3F51B5"
-        android:textSize="18dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view9" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_activity_main"
+        android:id="@+id/recycler_main_activity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
@@ -56,15 +61,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_name_row2" />
+        app:layout_constraintTop_toBottomOf="@+id/view10" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +91,7 @@
             android:id="@+id/view5"
             android:layout_width="30dp"
             android:layout_height="20dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="120dp"
             android:background="#00C853"
             app:layout_constraintStart_toEndOf="@+id/pieChart"
@@ -96,7 +101,7 @@
             android:id="@+id/view7"
             android:layout_width="30dp"
             android:layout_height="20dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:background="#DD2C00"
             app:layout_constraintStart_toEndOf="@+id/pieChart"
@@ -106,7 +111,7 @@
             android:id="@+id/view8"
             android:layout_width="30dp"
             android:layout_height="20dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="4dp"
             android:background="#00B8D4"
             app:layout_constraintStart_toEndOf="@+id/pieChart"
@@ -217,7 +222,21 @@
         android:layout_marginEnd="20dp"
         android:background="#8D8D8D"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <View
+        android:id="@+id/view10"
+        android:layout_width="0dp"
+        android:layout_height="2px"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:background="#8D8D8D"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_name_row2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
