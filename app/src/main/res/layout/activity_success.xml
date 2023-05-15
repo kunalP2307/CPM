@@ -36,7 +36,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
-        android:text="Data has been updated"
+        android:text="Action Is Successful!"
         android:textColor="#00C853"
         app:layout_constraintBottom_toTopOf="@+id/button_go_to_dash"
         app:layout_constraintEnd_toEndOf="parent"

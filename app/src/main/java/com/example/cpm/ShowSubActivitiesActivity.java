@@ -132,7 +132,11 @@ public class ShowSubActivitiesActivity extends AppCompatActivity implements Sele
         textViewAddSubAct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), AddNewTaskActivity.class);
+                intent.putExtra("EXTRA_TASK_TYPE", "sub");
+                intent.putExtra("EXTRA_ACT_NO",activityNo);
+                intent.putExtra("EXTRA_PROJECT", project);
+                startActivity(intent);
             }
         });
 

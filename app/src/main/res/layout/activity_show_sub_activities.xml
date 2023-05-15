@@ -83,6 +83,19 @@
             app:layout_constraintTop_toBottomOf="@+id/textView_activity_name_sub_act" />
 
         <View
+            android:id="@+id/view19"
+            android:layout_width="4px"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="20dp"
+            android:background="#00BFA5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.547"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view18" />
+
+        <View
             android:id="@+id/view15"
             android:layout_width="4px"
             android:layout_height="30dp"
@@ -130,6 +143,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view15" />
 
+        <View
+            android:id="@+id/view18"
+            android:layout_width="0dp"
+            android:layout_height="4px"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:background="#00BFA5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_result_sub_act" />
+
         <TextView
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
@@ -166,6 +192,34 @@
             app:layout_constraintBottom_toBottomOf="@+id/view17"
             app:layout_constraintEnd_toStartOf="@+id/view17"
             app:layout_constraintTop_toBottomOf="@+id/view16" />
+
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="2dp"
+            android:text="View Document"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+            app:layout_constraintEnd_toStartOf="@+id/imageView10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView10" />
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="20dp"
+            android:text="Upload Document"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView11"
+            app:layout_constraintTop_toTopOf="@+id/imageView11" />
 
         <TextView
             android:id="@+id/textView17"
@@ -221,12 +275,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="20dp"
             android:text="20-10-23"
             android:textColor="#00BFA5"
             android:textSize="20dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view17"
             app:layout_constraintTop_toBottomOf="@+id/view16" />
@@ -248,6 +300,26 @@
             app:layout_constraintStart_toEndOf="@+id/view13"
             app:layout_constraintTop_toBottomOf="@+id/edit_text_end_date_sub_act"
             app:srcCompat="@drawable/ic_edit" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view19"
+            app:layout_constraintEnd_toStartOf="@+id/view19"
+            app:layout_constraintTop_toTopOf="@+id/view19"
+            app:srcCompat="@drawable/ic_view_doc" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view19"
+            app:layout_constraintStart_toEndOf="@+id/view19"
+            app:layout_constraintTop_toTopOf="@+id/view19"
+            app:srcCompat="@drawable/ic_upload_doc" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -26,6 +26,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
     String taskType;
     Project project;
+    int mainActivityNo;
     EditText editTextTaskId, editTextTitle, editTextStartDate, editTextEndDate, editTextDuration;
     Button buttonAddTask;
 
@@ -56,7 +57,10 @@ public class AddNewTaskActivity extends AppCompatActivity {
                     storeProject();
                 }
                 else{
-
+                    Bundle extras = getIntent().getExtras();
+                    mainActivityNo = extras.getInt("EXTRA_ACT_NO");
+                    project.getListActivities().get(mainActivityNo).add(getActivityModel());
+                    storeProject();
                 }
             }
         });
