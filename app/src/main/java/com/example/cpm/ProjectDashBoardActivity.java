@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cpm.model.Activity;
@@ -31,21 +32,35 @@ public class ProjectDashBoardActivity extends AppCompatActivity implements Selec
     private ActivityAdapter activityAdapter;
     private ArrayList<ArrayList<Activity>> subActivities = new ArrayList<ArrayList<Activity>>();
     private Project project;
+    TextView textViewAddMainActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_dash_board);
 
+        getProjectData();
+        bindComponents();
         activityAdapter = new ActivityAdapter(this, this);
-        recyclerView = findViewById(R.id.recycler_main_activity);
         recyclerView.setAdapter(activityAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        getProjectData();
         initRecyclerView();
 
     }
 
+    private void bindComponents(){
+        recyclerView = findViewById(R.id.recycler_main_activity);
+        textViewAddMainActivity = findViewById(R.id.text_view_add_main_act);
+        textViewAddMainActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddNewTaskActivity.class);
+                intent.putExtra("EXTRA_TASK_TYPE", "main");
+                intent.putExtra("EXTRA_PROJECT", project);
+                startActivity(intent);
+            }
+        });
+    }
     private void getProjectData(){
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -125,6 +140,9 @@ public class ProjectDashBoardActivity extends AppCompatActivity implements Selec
         Toast.makeText(this, ""+position, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), ShowSubActivitiesActivity.class);
         intent.putExtra("EXTRA_ACTIVITIES", project.getListActivities().get(position));
+        intent.putExtra("EXTRA_TASK_TYPE", "main");
+        intent.putExtra("EXTRA_ACTIVITY_NO", position);
+        intent.putExtra("EXTRA_PROJECT", project);
         startActivity(intent);
 
     }
