@@ -87,8 +87,9 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
                 textViewDelay.setTextColor(Color.GREEN);
 
             if(activity.getDelay() < 0)
-                activity.setDelay(activity.getDelay() * - 1);
-            textViewDelay.setText(activity.getDelay()+" Days");
+                textViewDelay.setText(activity.getDelay() * -1 +" Days");
+            else
+                textViewDelay.setText(activity.getDelay()+" Days");
         }
     }
 }

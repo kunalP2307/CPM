@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.cpm.model.Activity;
 import com.example.cpm.model.Project;
+import com.example.cpm.utils.ActivityUtils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +25,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,11 +37,11 @@ public class ShowSubActivitiesActivity extends AppCompatActivity implements Sele
     RecyclerView recyclerView;
     ArrayList<Activity> activities;
     ActivityAdapter activityAdapter;
-    TextView textViewTaskName, textViewResult, textViewAddSubAct;
+    TextView textViewTaskName, textViewResult, textViewAddSubAct, textViewDuration, textViewTaskId;
     EditText editTextStartDate, editTextEndDate;
     Button buttonSaveActDetails;
     String taskType;
-    int activityNo;
+    int activityNo, subActivityNo;
     Project project;
 
     @Override
@@ -50,7 +54,6 @@ public class ShowSubActivitiesActivity extends AppCompatActivity implements Sele
         activityAdapter = new ActivityAdapter(this, this);
         recyclerView.setAdapter(activityAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        bindComponents();
         getActivities();
         initRecyclerView();
         initResult();
@@ -60,6 +63,36 @@ public class ShowSubActivitiesActivity extends AppCompatActivity implements Sele
         if(taskType.equals("main")){
             editTextStartDate.setText(activities.get(0).getStartDate());
             editTextEndDate.setText(activities.get(0).getFinishDate());
+            textViewDuration.setText(activities.get(0).getDuration()+" Days");
+            if(ActivityUtils.getDelay(activities.get(0)) == 0){
+                textViewResult.setText("Completed On Time");
+                textViewResult.setTextColor(Color.BLUE);
+            }
+            else if(ActivityUtils.getDelay(activities.get(0)) < 0){
+                textViewResult.setText("Delay of "+ActivityUtils.getDelay(activities.get(0)) * -1+" Days");
+                textViewResult.setTextColor(Color.RED);
+            }
+            else {
+                textViewResult.setText("Completed "+ActivityUtils.getDelay(activities.get(0))+" Earlier");
+                textViewResult.setTextColor(Color.GREEN);
+            }
+        }
+        else{
+            editTextStartDate.setText(activities.get(subActivityNo + 1).getStartDate());
+            editTextEndDate.setText(activities.get(subActivityNo + 1).getFinishDate());
+            textViewDuration.setText(activities.get(subActivityNo + 1).getDuration()+" Days");
+            if(ActivityUtils.getDelay(activities.get(subActivityNo + 1)) == 0){
+                textViewResult.setText("Completed On Time");
+                textViewResult.setTextColor(Color.BLUE);
+            }
+            else if(ActivityUtils.getDelay(activities.get(subActivityNo + 1)) <= 0){
+                textViewResult.setText("Delay of "+ActivityUtils.getDelay(activities.get(subActivityNo + 1)) * -1+" Days");
+                textViewResult.setTextColor(Color.RED);
+            }
+            else {
+                textViewResult.setText("Completed "+ActivityUtils.getDelay(activities.get(subActivityNo + 1))+" Earlier");
+                textViewResult.setTextColor(Color.GREEN);
+            }
         }
     }
 
@@ -69,8 +102,10 @@ public class ShowSubActivitiesActivity extends AppCompatActivity implements Sele
         editTextEndDate = findViewById(R.id.edit_text_end_date_sub_act);
         editTextStartDate = findViewById(R.id.edit_text_start_date_sub_act);
         textViewResult = findViewById(R.id.edit_text_result_sub_act);
+        textViewDuration = findViewById(R.id.edit_text_duration_sub_act);
         buttonSaveActDetails = findViewById(R.id.button_save_act_details);
         textViewAddSubAct = findViewById(R.id.text_view_add_sub_act);
+        textViewTaskId  = findViewById(R.id.textView_activity_id_sub_act);
 
         buttonSaveActDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +119,11 @@ public class ShowSubActivitiesActivity extends AppCompatActivity implements Sele
                         storeProjectData();
                     }
                     else{
-
+                        project.getListActivities().get(activityNo).
+                                get(subActivityNo + 1).setStartDate(editTextStartDate.getText().toString());
+                        project.getListActivities().get(activityNo).
+                                get(subActivityNo + 1).setFinishDate(editTextEndDate.getText().toString());
+                        storeProjectData();
                     }
                 }
             }
@@ -159,9 +198,14 @@ public class ShowSubActivitiesActivity extends AppCompatActivity implements Sele
     private void initRecyclerView(){
         if(taskType.equals("main")) {
             textViewTaskName.setText(activities.get(0).getTaskName());
+            textViewTaskId.setText(activities.get(0).getId());
             for (int i = 1; i < activities.size(); i++) {
                 activityAdapter.addActivity(activities.get(i));
             }
+        }
+        else{
+            textViewTaskName.setText(activities.get(subActivityNo + 1).getTaskName());
+            textViewTaskId.setText(activities.get(subActivityNo + 1).getId());
         }
     }
     private void getActivities(){
@@ -177,16 +221,23 @@ public class ShowSubActivitiesActivity extends AppCompatActivity implements Sele
             taskType = extras.getString("EXTRA_TASK_TYPE");
             activityNo = extras.getInt("EXTRA_ACTIVITY_NO");
             project = (Project) extras.getSerializable("EXTRA_PROJECT");
-            if(taskType.equals("main")){
+            if (taskType.equals("main")) {
 
-            }
-            else
+            } else {
                 temp();
+                subActivityNo = extras.getInt("EXTRA_ACTIVITY_NO_SUB");
+            }
         }
     }
 
     @Override
     public void onItemClick(View v, int position, com.example.cpm.model.Activity activity) {
-
+        Intent intent = new Intent(getApplicationContext(), ShowSubActivitiesActivity.class);
+        intent.putExtra("EXTRA_TASK_TYPE","sub");
+        intent.putExtra("EXTRA_ACTIVITY_NO", activityNo);
+        intent.putExtra("EXTRA_ACTIVITY_NO_SUB", position);
+        intent.putExtra("EXTRA_PROJECT", project);
+        intent.putExtra("EXTRA_ACTIVITIES", project.getListActivities().get(activityNo));
+        startActivity(intent);
     }
 }

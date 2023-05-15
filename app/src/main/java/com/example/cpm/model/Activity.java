@@ -73,6 +73,7 @@ public class Activity implements Serializable {
                 ", duration='" + duration + '\'' +
                 ", startDate='" + startDate + '\'' +
                 ", finishDate='" + finishDate + '\'' +
+                ", delay='" + delay + '\'' +
                 '}';
     }
 }
