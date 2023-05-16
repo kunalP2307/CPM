@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
 
 import java.util.ArrayList;
 
@@ -30,9 +32,10 @@ public class ProjectDashBoardActivity extends AppCompatActivity implements Selec
 
     RecyclerView recyclerView;
     private ActivityAdapter activityAdapter;
+    TextView textViewProjectTitle, textViewStartDate, textViewEndDate;
     private ArrayList<ArrayList<Activity>> subActivities = new ArrayList<ArrayList<Activity>>();
     private Project project;
-    TextView textViewAddMainActivity;
+    TextView textViewAddMainActivity,textViewCompletedOnTime, textViewCompletedWithDelay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +48,64 @@ public class ProjectDashBoardActivity extends AppCompatActivity implements Selec
         recyclerView.setAdapter(activityAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         initRecyclerView();
+        setProjectDetails();
+    }
 
+    private void setProjectDetails(){
+        textViewProjectTitle.setText(project.getProjectName());
+        textViewStartDate.setText(project.getStartDate());
+        textViewEndDate.setText(project.getExpectedEndDate());
+
+        setPieChart();
+    }
+
+    private void setPieChart(){
+        int outOff = project.getListActivities().size();
+        int completedWithDelay = getCountOfCompletedWithDelay();
+        int completedWithoutDelay = getCountOfCompletedWitOuthDelay();
+        pieChart.addPieSlice(
+                new PieModel(
+                        "Completed Without Delay",
+                         completedWithoutDelay * outOff,
+                        Color.parseColor("#FF00FF0A")));
+        textViewCompletedOnTime.setText(textViewCompletedOnTime.getText() + " (" + completedWithoutDelay + "/" + outOff + ")");
+
+        pieChart.addPieSlice(
+                new PieModel(
+                        "Completed With Delay",
+                        completedWithDelay * outOff,
+                        Color.parseColor("#FFFF0000")));
+        textViewCompletedWithDelay.setText(textViewCompletedWithDelay.getText() + " (" + completedWithDelay + "/" + outOff + ")");
+
+        pieChart.startAnimation();
+    }
+
+    private int getCountOfCompletedWithDelay(){
+        int count = 0;
+        for(int i=0; i<project.getListActivities().size(); i++){
+            if(project.getListActivities().get(i).get(0).getDelay() < 0)
+                count++;
+        }
+        return count;
+    }
+
+    private int getCountOfCompletedWitOuthDelay(){
+        int count = 0;
+        for(int i=0; i<project.getListActivities().size(); i++){
+            if(project.getListActivities().get(i).get(0).getDelay() > 0)
+                count++;
+        }
+        return count;
     }
 
     private void bindComponents(){
+        textViewProjectTitle = findViewById(R.id.textView_project_dash_titile);
+        textViewStartDate = findViewById(R.id.text_view_dash_start_date);
+        textViewEndDate = findViewById(R.id.text_view_dash_end_date);
+        textViewCompletedOnTime = findViewById(R.id.textViewCompletedOnTime);
+        textViewCompletedWithDelay = findViewById(R.id.textViewCompletedWithDelay);
+        pieChart = findViewById(R.id.pieChartDashBoard);
+
         recyclerView = findViewById(R.id.recycler_main_activity);
         textViewAddMainActivity = findViewById(R.id.text_view_add_main_act);
         textViewAddMainActivity.setOnClickListener(new View.OnClickListener() {

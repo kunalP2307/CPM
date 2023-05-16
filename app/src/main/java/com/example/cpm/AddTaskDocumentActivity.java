@@ -126,12 +126,10 @@ public class AddTaskDocumentActivity extends AppCompatActivity {
             progressDialog.show();
 
             Intent intent = getIntent();
-//            LivingPlace livingPlace = (LivingPlace) intent.getSerializableExtra("EXTRA_LIVING_PLACE");
-
+            String imageUrl = intent.getStringExtra("EXTRA_DOC_URL");
             StorageReference ref
                     = storageReference
-                    .child(
-                            "images/project1/actMain1");
+                    .child(imageUrl);
 
             ref.putFile(filePath)
                     .addOnSuccessListener(

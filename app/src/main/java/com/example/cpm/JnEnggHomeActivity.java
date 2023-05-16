@@ -85,7 +85,7 @@ public class JnEnggHomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 project1 = snapshot.getValue(Project.class);
-
+                textViewProject1.setText("\u2022 "+project1.getProjectName());
                 Log.d("TAG", "onDataChange: "+project1.toString());
             }
 

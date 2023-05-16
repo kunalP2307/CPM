@@ -37,11 +37,12 @@ public class ShowSubActivitiesActivity extends AppCompatActivity implements Sele
     RecyclerView recyclerView;
     ArrayList<Activity> activities;
     ActivityAdapter activityAdapter;
-    TextView textViewTaskName, textViewResult, textViewAddSubAct, textViewDuration, textViewTaskId;
+    TextView textViewTaskName, textViewResult, textViewAddSubAct, textViewDuration, textViewTaskId, textViewUploadDoc, textViewViewDoc;
     EditText editTextStartDate, editTextEndDate;
     Button buttonSaveActDetails;
     String taskType;
     int activityNo, subActivityNo;
+    String docsMainUrl = "images/project1/actMain";
     Project project;
 
     @Override
@@ -106,6 +107,8 @@ public class ShowSubActivitiesActivity extends AppCompatActivity implements Sele
         buttonSaveActDetails = findViewById(R.id.button_save_act_details);
         textViewAddSubAct = findViewById(R.id.text_view_add_sub_act);
         textViewTaskId  = findViewById(R.id.textView_activity_id_sub_act);
+        textViewViewDoc = findViewById(R.id.textView_view_document);
+        textViewUploadDoc = findViewById(R.id.textView_upload_document);
 
         buttonSaveActDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +143,23 @@ public class ShowSubActivitiesActivity extends AppCompatActivity implements Sele
             }
         });
 
+        textViewUploadDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddTaskDocumentActivity.class);
+                intent.putExtra("EXTRA_DOC_URL", docsMainUrl+activities.get(0).getId());
+                startActivity(intent);
+            }
+        });
+
+        textViewViewDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ShowTaskDocumentActivity.class);
+                intent.putExtra("EXTRA_DOC_URL", docsMainUrl+activities.get(0).getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void storeProjectData(){
@@ -196,7 +216,12 @@ public class ShowSubActivitiesActivity extends AppCompatActivity implements Sele
         findViewById(R.id.text_view_id_row2).setVisibility(View.GONE);
         findViewById(R.id.text_view_name_row5).setVisibility(View.GONE);
         findViewById(R.id.text_view_name_row4).setVisibility(View.GONE);
-
+        findViewById(R.id.textView_upload_document).setVisibility(View.GONE);
+        findViewById(R.id.imageView11).setVisibility(View.GONE);
+        findViewById(R.id.textView_view_document).setVisibility(View.GONE);
+        findViewById(R.id.imageView10).setVisibility(View.GONE);
+        findViewById(R.id.view19).setVisibility(View.GONE);
+        findViewById(R.id.view18).setVisibility(View.GONE);
 
     }
     private void initRecyclerView(){

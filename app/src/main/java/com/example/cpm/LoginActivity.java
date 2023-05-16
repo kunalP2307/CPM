@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        //checkIfLoggedIn();
+        checkIfLoggedIn();
         bindComponents();
         initSpinner();
     }
