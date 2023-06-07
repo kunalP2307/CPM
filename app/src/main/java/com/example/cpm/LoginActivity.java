@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-
         checkIfLoggedIn();
         bindComponents();
         initSpinner();
